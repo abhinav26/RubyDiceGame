@@ -51,6 +51,6 @@ class DiceSet
 		end
 		count
   end
-  private :calculate_subscore, :calculate_frequency
+  private :calculate_subscore, :calculate_frequency, :calculate_score
 
 end

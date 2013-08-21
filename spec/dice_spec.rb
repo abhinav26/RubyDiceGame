@@ -1,4 +1,4 @@
-require '/Users/abhinav/Dice Game Ruby/dice.rb'
+require '/Users/abhinav/RubyDiceGame/dice.rb'
 
 describe DiceSet do
 	
@@ -38,11 +38,11 @@ describe DiceSet do
 	describe "#calculate_score" do
 		it "checks for edge cases in roll score" do
 			@dice.values = [1,1,1,1,1]
-			@dice.calculate_score(5)
+			@dice.send(:calculate_score, 5)
 			@dice.roll_score.should eql 1200 
 
 			@dice.values = [2,3,6,3,2]
-			@dice.calculate_score(5)
+			@dice.send(:calculate_score, 5)
 			@dice.roll_score.should eql 0  
 		end
 
@@ -56,31 +56,31 @@ describe DiceSet do
 		
 		it "checks for cases with 3 or more ones or fives" do
 			@dice.values = [1,1,1,1,2]
-			@dice.calculate_score(5)
+			@dice.send(:calculate_score, 5)
 			@dice.roll_score.should eql 1100 
 
 			@dice.values = [1,5,5,5,2]
-			@dice.calculate_score(5)
+			@dice.send(:calculate_score, 5)
 			@dice.roll_score.should eql 600 
 		end
 
 		it "checks for cases with 3 of other numbers" do
 			@dice.values = [1,2,2,3,2]
-			@dice.calculate_score(5)
+			@dice.send(:calculate_score, 5)
 			@dice.roll_score.should eql 300 
 		end
 
 		it "checks for score with different sizes of values" do
 			@dice.values = [1,2,5]
-			@dice.calculate_score(3)
+			@dice.send(:calculate_score, 3)
 			@dice.roll_score.should eql 150
 
 			@dice.values = [5]
-			@dice.calculate_score(3)
+			@dice.send(:calculate_score, 3)
 			@dice.roll_score.should eql 50
 
 			@dice.values = []
-			@dice.calculate_score(3)
+			@dice.send(:calculate_score, 3)
 			@dice.roll_score.should eql 0
 		end
 	end
