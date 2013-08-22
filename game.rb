@@ -1,60 +1,48 @@
 require 'player.rb'
 
 class Game
-  def initialize
+  
+  END_GAME_POINTS = 3000
+  def initialize(number_of_players)
   	@final_round = false
   	@max_score = 0
   	@leader = []
-    @points_barrier = 3000
-  	@final_counter = 0
+  	@final_counter = number_of_players-1
+    @number_of_players =number_of_players
   end
 
-  def newgame(number_of_players)
-  	if number_of_players<2
-  		puts "Atleast 2 players required"
-  	  	return
-  	end
+  def newgame
+    puts "Atleast 2 players required" && return if @number_of_players < 2
 
-  	@final_counter=number_of_players-1
   	players = Array.new
-
-  	for i in 0..number_of_players
-  	  	players[i] = Player.new
+  	for i in 0..@number_of_players
+  	  players[i] = Player.new
   	end
+  	counter = 0
 
-  	counter = 1
-  	while true
-	  	puts "Player #{counter} score : #{players[counter].score}"
-	  	players[counter].turn
-	  	
-	  	if @final_round != true && players[i].score >= @points_barrier
-	  		@final_round = true
-	  	elsif @final_round == true
-	  		@final_counter -=1
-	  	end
+  	begin
+      puts "Player #{counter} score : #{players[counter].score}"
+	  	play_next_turn(players[counter])
+      check_lead(counter, players[counter].score)
+      counter = (counter + 1) % @number_of_players
+  	end while !gameover?
 
-	  	check_lead(counter,players[counter].score)
-	  	if counter == number_of_players
-	  		counter = 1
-	  	else
-	  		counter += 1
-	  	end
-	  	break if gameover?
-  	end
+    puts winner_display
+  end
+
+  def play_next_turn(player)
+    player.turn
     
-  	if @leader.size>1
-  		puts "The winners are Players #{@leader.join(", ")} with #{@max_score} points"
-  	else
-  		puts "The winner is Player#{@leader[0]} with #{@max_score} points"
-  	end
+    if @final_round == true
+      @final_counter -= 1
+    elsif player.score >= END_GAME_POINTS
+      @final_round = true
+    end
   end
 
   def gameover?
-  	if @final_counter == 0
-  		return true
-  	else
-  		return false
-  	end
+  	return true if @final_counter == 0  		
+    return false
   end
 
   def check_lead (i, score)
@@ -65,4 +53,15 @@ class Game
   		@leader << i
   	end
   end
+
+  def winner_display
+    if @leader.size>1
+      "The winners are Players #{@leader.join(", ")} with #{@max_score} points"
+    else
+      "The winner is Player#{@leader[0]} with #{@max_score} points"
+    end
+  end
+
+  private :check_lead , :winner_display , :gameover?
+
 end

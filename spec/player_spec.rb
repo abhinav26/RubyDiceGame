@@ -21,7 +21,6 @@ describe Player do
 	end
 
 	describe "#turn" do
-
 		it "stops if all die are non_scoring" do
 			DiceSet.any_instance.should_receive(:roll_score).with(no_args()).and_return(0)
 			DiceSet.any_instance.should_receive(:non_scoring).with(no_args()).and_return(5)
@@ -54,7 +53,8 @@ describe Player do
 	describe "#check_scoring_started?" do
 	 	it "returns true if @started_scoring is true" do
 	 		@player.instance_variable_set(:@started_scoring, true)
-	 		@player.send(:check_scoring_started?, 400).should eql true end
+	 		@player.send(:check_scoring_started?, 400).should eql true 
+	 	end
 
 	 	it "returns false if @started_scoring is false and roll_score < 300" do
 	 		@player.instance_variable_set(:@started_scoring, false)

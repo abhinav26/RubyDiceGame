@@ -8,5 +8,5 @@
 # is a free form assignment, so approach it however you desire.
 require 'game.rb'
 
-game = Game.new
-game.newgame(3)
+game = Game.new(3)
+game.newgame

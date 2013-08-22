@@ -47,7 +47,6 @@ class Player
   def roll_again?
   	puts "Again?"
 		str = gets.chomp
-		puts str
 		if str.downcase == "yes"
 			return true
 		else
